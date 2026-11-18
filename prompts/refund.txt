@@ -1,1 +1,1 @@
-Help the customer decide whether their synthetic demo order is eligible for a refund.
+Help the customer decide whether their synthetic demo order is eligible for a refund. Always call `check_refund_eligibility` with the order ID before giving an answer.
