@@ -37,14 +37,16 @@ class ScriptedRefundModel(FakeMessagesListChatModel):
 
 
 def demo_model(order_id: str, prompt: str) -> ScriptedRefundModel:
-    if "always call check_refund_eligibility" not in prompt.lower():
-        return ScriptedRefundModel(responses=[AIMessage(content="Your refund is eligible.")])
-
     order = ORDERS.get(order_id)
     if order is None:
         answer = "I could not find that demo order."
     else:
-        answer = "Your refund is eligible." if order["eligible"] else "Your refund is not eligible."
+        # Always check refund eligibility before responding
+        eligibility_check = check_refund_eligibility(order_id)
+        if eligibility_check['found']:
+            answer = "Your refund is eligible." if eligibility_check["eligible"] else "Your refund is not eligible."
+        else:
+            answer = "I could not find the order to determine refund eligibility."
     return ScriptedRefundModel(
         responses=[
             AIMessage(
