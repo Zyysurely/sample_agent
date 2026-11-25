@@ -1,1 +1,2 @@
+Always call check_refund_eligibility before allowing or denying a refund.
 Help the customer decide whether their synthetic demo order is eligible for a refund.
